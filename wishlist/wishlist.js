@@ -50,6 +50,12 @@ async function getCartnums(token) {
   const result = await response.json();
   if (result.status == "success") {
     document.querySelector(".numOfCartItems").innerHTML = result.numOfCartItems;
+    document.querySelector(".loader").classList.remove("fixed");
+    document.querySelector(".loader").classList.add("hidden");
+  } else {
+    document.querySelector(".numOfCartItems").innerHTML = 0;
+    document.querySelector(".loader").classList.remove("fixed");
+    document.querySelector(".loader").classList.add("hidden");
   }
 }
 
@@ -63,6 +69,10 @@ async function getWishlistNums(token) {
     .then((result) => {
       if (result.status == "success") {
         document.querySelector(".numOfWishItems").innerHTML = result.count;
+      } else {
+        document.querySelector(".numOfWishItems").innerHTML = 0;
+        document.querySelector(".loader").classList.remove("fixed");
+        document.querySelector(".loader").classList.add("hidden");
       }
     });
 }
@@ -96,7 +106,7 @@ function displayProduct(products) {
             id="${product.id}"
             class="wishlist-card group bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
           >
-            <div class="relative flex items-center justify-center">
+            <div class="relative cursor-pointer flex items-center justify-center" onclick="window.location.href = '../product/product.html?id=${product.id}'">
               <img
                 src="${product.imageCover}"
                 alt="Wireless Headphones"
@@ -106,11 +116,11 @@ function displayProduct(products) {
             <div class="p-6">
               <div class="flex justify-between items-start">
                 <div>
-                  <h3 class="text-xl font-semibold text-gray-900">
+                  <h3 class="text-xl cursor-pointer font-semibold text-gray-900" onclick="window.location.href = '../product/product.html?id=${product.id}'">
                     ${product.title.slice(0, 40)}
                   </h3>
                   <p class="text-gray-500 text-sm mt-px">
-                    ${product.description}
+                    ${product.description.slice(0, 65)}
                   </p>
                 </div>
                 <div class="text-right">
@@ -144,6 +154,7 @@ function displayProduct(products) {
 async function addToCart(ele) {
   document.querySelector(".loader").classList.remove("hidden");
   document.querySelector(".loader").classList.add("fixed");
+  let numOfCart = parseInt(document.querySelector(".numOfCartItems").innerHTML);
   let productId = ele.closest(".wishlist-card").id;
   let response = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
     method: "POST",
@@ -155,16 +166,28 @@ async function addToCart(ele) {
       productId: productId,
     }),
   });
-  response.json().then(() => {
-    Swal.fire({
-      icon: "success",
-      title: "Product added to cart successfully",
-      showConfirmButton: false,
-      timer: 1000,
-    }).then(() => {
-      getCartnums(localStorage.getItem("token"));
-      getWishlistItems(localStorage.getItem("token"));
-    });
+  response.json().then((result) => {
+    if (result.numOfCartItems === numOfCart) {
+      Swal.fire({
+        icon: "info",
+        title:
+          "Product already added to cart! but the quantity has been updated by 1",
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => {
+        document.querySelector(".loader").classList.remove("fixed");
+        document.querySelector(".loader").classList.add("hidden");
+      });
+    } else {
+      Swal.fire({
+        icon: "success",
+        title: "Product added to cart successfully",
+        showConfirmButton: false,
+        timer: 1000,
+      }).then(() => {
+        getCartnums(localStorage.getItem("token"));
+      });
+    }
   });
 }
 

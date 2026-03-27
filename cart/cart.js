@@ -42,6 +42,10 @@ async function getCartnums(token) {
   const result = await response.json();
   if (result.status == "success") {
     document.querySelector(".numOfCartItems").innerHTML = result.numOfCartItems;
+  } else {
+    document.querySelector(".loader").classList.remove("fixed");
+    document.querySelector(".loader").classList.add("hidden");
+    document.querySelector(".numOfCartItems").innerHTML = 0;
   }
 }
 
@@ -59,6 +63,10 @@ async function getWishlistNums(token) {
   const result = await response.json();
   if (result.status == "success") {
     document.querySelector(".numOfWishItems").innerHTML = result.count;
+  } else {
+    document.querySelector(".loader").classList.remove("fixed");
+    document.querySelector(".loader").classList.add("hidden");
+    document.querySelector(".numOfWishItems").innerHTML = 0;
   }
 }
 
@@ -81,6 +89,8 @@ async function getCartItems(token) {
     const products = result.data.products;
     displayProduct(products);
   }
+  getCartnums(localStorage.getItem("token"));
+  getWishlistNums(localStorage.getItem("token"));
   document.querySelector(".loader").classList.remove("fixed");
   document.querySelector(".loader").classList.add("hidden");
 }
@@ -97,14 +107,14 @@ function displayProduct(products) {
               id="${product.product.id}"
               class="cart flex items-center max-sm:flex-col gap-4 max-sm:gap-6"
             >
-              <div class="w-52 h-52 shrink-0">
+              <div class="w-52 cursor-pointer h-52 shrink-0" onclick="window.location.href = '../product/product.html?id=${product.product.id}'">
                 <img
                   src="${product.product.imageCover}"
                   class="w-full h-full object-contain"
                 />
               </div>
               <div class="sm:border-l sm:pl-4 sm:border-gray-300 w-full">
-                <h3 class="text-base font-semibold text-slate-900">
+                <h3 class="text-base cursor-pointer font-semibold text-slate-900" onclick="window.location.href = '../product/product.html?id=${product.product.id}'">
                   ${product.product.title}
                 </h3>
                 <h3 class="mt-2 text-base font-semibold text-slate-400">

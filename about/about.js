@@ -28,6 +28,10 @@ async function getCartnums(token) {
   const result = await response.json();
   if (result.status == "success") {
     document.querySelector(".numOfCartItems").innerHTML = result.numOfCartItems;
+  } else {
+    document.querySelector(".numOfCartItems").innerHTML = 0;
+    document.querySelector(".loader").classList.remove("fixed");
+    document.querySelector(".loader").classList.add("hidden");
   }
 }
 
@@ -41,6 +45,10 @@ async function getWishlistNums(token) {
     .then((result) => {
       if (result.status == "success") {
         document.querySelector(".numOfWishItems").innerHTML = result.count;
+      } else {
+        document.querySelector(".numOfWishItems").innerHTML = 0;
+        document.querySelector(".loader").classList.remove("fixed");
+        document.querySelector(".loader").classList.add("hidden");
       }
     });
   document.querySelector(".loader").classList.remove("fixed");
