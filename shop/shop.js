@@ -90,7 +90,7 @@ function displayProducts(products) {
   } else {
     let productContainer = document.querySelector(".productContainer");
     productContainer.innerHTML = "";
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < products.length; i++) {
       productContainer.innerHTML += `
                 <div id = "${products[i].id}" class="shadow-md p-4 rounded-2xl">
                 <img
