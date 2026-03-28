@@ -51,6 +51,11 @@ function togglePassword() {
   input.type = input.type === "password" ? "text" : "password";
 }
 
+function togglerePassword() {
+  const input = document.getElementById("rePassword");
+  input.type = input.type === "password" ? "text" : "password";
+}
+
 async function calling(data) {
   const response = await fetch(
     "https://ecommerce.routemisr.com/api/v1/auth/signup",
