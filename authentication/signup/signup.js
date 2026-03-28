@@ -7,7 +7,7 @@ function getData() {
   const phoneRegex = /^01[0125][0-9]{8}$/;
   const password = document.getElementById("password").value;
   const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?\_&])[A-Za-z\d@$!%*?\_&]{8,}$/;
   const rePassword = document.getElementById("rePassword").value;
   const data = { name, email, phone, password, rePassword };
 
