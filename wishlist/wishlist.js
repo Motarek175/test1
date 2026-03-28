@@ -7,6 +7,9 @@ window.onload = function () {
     notSigned.classList.add("hidden");
     getCartnums(localStorage.getItem("token"));
     getWishlistNums(localStorage.getItem("token"));
+    const decoded = jwt_decode(localStorage.getItem("token"));
+    document.querySelector(".userName").innerHTML = decoded.name;
+
     getWishlistItems(localStorage.getItem("token"));
   } else {
     document.querySelector(".loader").classList.remove("fixed");
@@ -24,7 +27,7 @@ window.onload = function () {
       if (result.isConfirmed) {
         window.location.href = "../authentication/signin/signin.html";
       } else {
-        window.location.href = "#";
+        window.location.reload();
         signed.classList.add("hidden");
       }
     });

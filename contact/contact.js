@@ -7,10 +7,13 @@ window.onload = function () {
     notSigned.classList.add("hidden");
     getCartnums(localStorage.getItem("token"));
     getWishlistNums(localStorage.getItem("token"));
+    const decoded = jwt_decode(localStorage.getItem("token"));
+    document.querySelector(".userName").innerHTML = decoded.name;
   } else {
     signed.classList.add("hidden");
     document.querySelector(".loader").classList.remove("fixed");
     document.querySelector(".loader").classList.add("hidden");
+    document.querySelector(".userName").classList.add("hidden");
   }
 };
 

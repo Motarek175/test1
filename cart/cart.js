@@ -7,6 +7,9 @@ window.onload = function () {
     notSigned.classList.add("hidden");
     getCartnums(localStorage.getItem("token"));
     getWishlistNums(localStorage.getItem("token"));
+    const decoded = jwt_decode(localStorage.getItem("token"));
+    document.querySelector(".userName").innerHTML = decoded.name;
+
     getCartItems(localStorage.getItem("token"));
   } else {
     document.querySelector(".loader").classList.remove("fixed");

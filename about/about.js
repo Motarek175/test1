@@ -7,6 +7,8 @@ window.onload = function () {
     notSigned.classList.add("hidden");
     getCartnums(localStorage.getItem("token"));
     getWishlistNums(localStorage.getItem("token"));
+    const decoded = jwt_decode(localStorage.getItem("token"));
+    document.querySelector(".userName").innerHTML = decoded.name;
   } else {
     document.querySelector(".loader").classList.remove("fixed");
     document.querySelector(".loader").classList.add("hidden");
@@ -27,6 +29,7 @@ async function getCartnums(token) {
     document.querySelector(".numOfCartItems").innerHTML = 0;
     document.querySelector(".loader").classList.remove("fixed");
     document.querySelector(".loader").classList.add("hidden");
+    document.querySelector(".userName").classList.add("hidden");
   }
 }
 

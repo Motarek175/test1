@@ -106,6 +106,9 @@
                 class="w-48 py-2 signed origin-top-right rounded-md bg-white shadow-lg outline outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
               >
                 <p
+                  class="userName font-medium italic px-4 py-2 w-full text-sm cursor-default text-gray-700"
+                ></p>
+                <p
                   onclick="signOut()"
                   class="px-4 py-2 w-full text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:outline-hidden"
                 >
@@ -364,8 +367,9 @@
         >
           <img class="w-24 h-24" src="../imgs//logo.png" alt="Logo" />
           <p class="max-w-[410px] mt-3">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum unde
-            quaerat eveniet cumque accusamus atque qui error quo enim fugiat?
+            Discover a seamless shopping experience with a wide range of
+            high-quality products carefully selected to meet your everyday
+            needs.
           </p>
         </div>
         <div class="flex justify-around md:justify-center gap-18 md:gap-36">
@@ -448,6 +452,7 @@
         Copyright 2026 © Mohamed Tarek All Right Reserved.
       </p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1"
       type="module"
