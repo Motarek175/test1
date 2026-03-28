@@ -34,7 +34,7 @@
       <div class="mx-auto py-2 px-2 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <!-- Logo -->
-          <a href="index.html" class="flex items-center">
+          <a href="../index.html" class="flex items-center">
             <img src="../imgs/logo.png" alt="Your Company" class="h-24 w-24" />
           </a>
 
@@ -90,42 +90,45 @@
                 0
               </span>
             </a>
-
-            <!-- Profile -->
-            <el-dropdown class="relative ml-3">
+            <!-- profile -->
+            <div class="relative ml-3">
+              <!-- Button -->
               <button
-                class="relative text-center cursor-pointer flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                id="profileBtn"
+                class="text-center cursor-pointer flex rounded-full focus:outline-none"
               >
-                <!-- person icon -->
                 <i class="fa-regular fa-circle-user text-3xl"></i>
               </button>
-              <el-menu
-                anchor="bottom end"
-                popover
-                class="w-48 py-2 signed origin-top-right rounded-md bg-white shadow-lg outline outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+
+              <!-- Dropdown -->
+              <div
+                id="dropdownMenu"
+                class="hidden absolute right-0 mt-2 w-48 z-50 rounded-md bg-white shadow-lg outline outline-black/5"
               >
-                <p
-                  class="userName font-medium italic px-4 py-2 w-full text-sm cursor-default text-gray-700"
-                ></p>
-                <p
-                  onclick="signOut()"
-                  class="px-4 py-2 w-full text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:outline-hidden"
-                >
-                  Sign out
-                </p>
-              </el-menu>
-              <el-menu
-                anchor="bottom end"
-                popover
-                class="notSigned w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-              >
-                <a
-                  href="../authentication/signin/signin.html"
-                  class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
-                  >SignIn</a
-                >
-              </el-menu>
-            </el-dropdown>
+                <!-- Signed -->
+                <div class="signed">
+                  <p
+                    class="userName font-medium italic px-4 py-2 text-sm text-gray-700"
+                  ></p>
+                  <p
+                    onclick="signOut()"
+                    class="px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100"
+                  >
+                    Sign out
+                  </p>
+                </div>
+
+                <!-- Not Signed -->
+                <div class="notSigned hidden">
+                  <a
+                    href="./authentication/signin/signin.html"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Sign In
+                  </a>
+                </div>
+              </div>
+            </div>
 
             <!-- Mobile Menu Button -->
             <button
@@ -216,7 +219,12 @@
         <div
           class="flex flex-col justify-center items-center sm:items-start sm:justify-start"
         >
-          <img class="w-24 h-24" src="../imgs/logo.png" alt="Logo" />
+          <img
+            class="w-24 h-24"
+            src="../imgs/logo.png"
+            alt="Logo"
+            onclick="window.location.href = '../index.html'"
+          />
           <p class="max-w-[410px] mt-3">
             Discover a seamless shopping experience with a wide range of
             high-quality products carefully selected to meet your everyday

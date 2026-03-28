@@ -180,6 +180,16 @@ async function placeOrder() {
   }
 }
 
+const btn = document.getElementById("profileBtn");
+const menu = document.getElementById("dropdownMenu");
+btn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  menu.classList.toggle("hidden");
+});
+document.addEventListener("click", () => {
+  menu.classList.add("hidden");
+});
+
 function signOut() {
   Swal.fire({
     icon: "success",
