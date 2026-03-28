@@ -13,6 +13,11 @@ window.onload = function () {
   }
 };
 
+function togglePassword() {
+  const input = document.getElementById("password");
+  input.type = input.type === "password" ? "text" : "password";
+}
+
 function getData() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
