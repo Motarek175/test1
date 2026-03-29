@@ -37,6 +37,10 @@ window.onload = function () {
   getProdcts();
 };
 
+let allProducts = [];
+let currentIndex = 0;
+let step = 6;
+
 async function getCategories() {
   let response = await fetch(
     "https://ecommerce.routemisr.com/api/v1/categories",
@@ -91,61 +95,73 @@ async function getProdctsByCategory(catIds) {
       }
     }
   }
-  displayProducts(filteredProducts);
+  allProducts = filteredProducts;
+  currentIndex = 0;
+  displayProducts(allProducts);
 }
 
 async function getProdcts() {
   let response = await fetch("https://ecommerce.routemisr.com/api/v1/products");
   let result = await response.json();
-  let products = result.data;
-  displayProducts(products);
+  allProducts = result.data;
+  currentIndex = 0;
+  displayProducts(allProducts);
 }
 
+document.getElementById("showMoreBtn").addEventListener("click", () => {
+  displayProducts(allProducts);
+});
+
 function displayProducts(products) {
-  if (products.length == 0) {
-    let productContainer = document.querySelector(".productContainer");
+  let productContainer = document.querySelector(".productContainer");
+  let showMoreBtn = document.getElementById("showMoreBtn");
+  if (currentIndex === 0) {
     productContainer.innerHTML = "";
-    productContainer.innerHTML = `<h1 class="text-2xl font-bold text-gray-700">No products found</h1>`;
-    document.querySelector(".loader").classList.remove("fixed");
-    document.querySelector(".loader").classList.add("hidden");
-  } else {
-    let productContainer = document.querySelector(".productContainer");
-    productContainer.innerHTML = "";
-    for (let i = 0; i < products.length; i++) {
-      productContainer.innerHTML += `
-                <div id = "${products[i].id}" class="shadow-md p-4 rounded-2xl">
-                <img
-                src="${products[i].imageCover}"
-                alt="${products[i].slug}"
-                class="cursor-pointer aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8"
-                onclick="window.location.href = '../product/product.html?id=${products[i].id}'"
-                />
-              <div class="my-4 flex justify-between">
-                <div>
-                  <h3 onclick="window.location.href = '../product/product.html?id=${products[i].id}'" class="text-lg cursor-pointer font-medium text-gray-700">${products[i].title}</h3>
-                  <h3 class="text-sm text-gray-400">${products[i].category.name}</h3>
-                </div>
-                <p class="mt-2 text-lg font-medium text-gray-900">$${products[i].price}</p>
-              </div>
-              <div class="mt-4 flex gap-3">
-                <button
-                  class="flex-1 cursor-pointer bg-indigo-700 hover:bg-indigo-600 text-white font-semibold px-1 py-2 rounded-3xl flex items-center justify-center gap-x-2 transition-colors"
-                  onclick="addToCart('${products[i].id}')"
-                  >
-                  <i class="fa-solid fa-cart-plus"></i>
-                </button>
-                <button
-                  class="cursor-pointer hover:text-red-600 text-gray-700 font-semibold py-2 rounded-3xl flex items-center justify-center gap-x-2 transition-colors"
-                onclick="addToWishList('${products[i].id}')">
-                  <i class="fa-solid fa-heart"></i>
-                </button>
-              </div>
-              </div>
-    `;
-    }
-    document.querySelector(".loader").classList.remove("fixed");
-    document.querySelector(".loader").classList.add("hidden");
   }
+  let nextProducts = products.slice(currentIndex, currentIndex + step);
+  for (let i = 0; i < nextProducts.length; i++) {
+    productContainer.innerHTML += `
+      <div id = "${nextProducts[i].id}" class="shadow-md p-4 rounded-2xl">
+      <img
+      src="${nextProducts[i].imageCover}"
+      alt="${nextProducts[i].slug}"
+      class="cursor-pointer aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8"
+      onclick="window.location.href = '../product/product.html?id=${nextProducts[i].id}'"
+      />
+    <div class="my-4 flex justify-between">
+      <div>
+        <h3 onclick="window.location.href = '../product/product.html?id=${nextProducts[i].id}'" class="text-lg cursor-pointer font-medium text-gray-700">${nextProducts[i].title.slice(0, 15)}</h3>
+        <h3 class="text-sm text-gray-400">${nextProducts[i].category.name}</h3>
+      </div>
+      <p class="mt-2 text-lg font-medium text-gray-900">$${nextProducts[i].price}</p>
+    </div>
+    <div class="mt-4 flex gap-3">
+      <button
+        class="flex-1 cursor-pointer bg-indigo-700 hover:bg-indigo-600 text-white font-semibold px-1 py-2 rounded-3xl flex items-center justify-center gap-x-2 transition-colors"
+        onclick="addToCart('${nextProducts[i].id}')"
+        >
+        <i class="fa-solid fa-cart-plus"></i>
+      </button>
+      <button
+        class="cursor-pointer hover:text-red-600 text-gray-700 font-semibold py-2 rounded-3xl flex items-center justify-center gap-x-2 transition-colors"
+      onclick="addToWishList('${nextProducts[i].id}')">
+        <i class="fa-solid fa-heart"></i>
+      </button>
+    </div>
+    </div>
+    `;
+  }
+
+  currentIndex += step;
+
+  if (currentIndex < products.length) {
+    showMoreBtn.classList.remove("hidden");
+  } else {
+    showMoreBtn.classList.add("hidden");
+  }
+
+  document.querySelector(".loader").classList.remove("fixed");
+  document.querySelector(".loader").classList.add("hidden");
 }
 
 async function getCartnums(token) {
